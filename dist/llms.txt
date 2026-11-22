@@ -2,17 +2,17 @@
 > Wielkoformatowe panele ścienne frezowane z orzecha amerykańskiego Canaletto, dębu wędzonego i jesionu termowanego. Zaprojektowane w Mediolanie, produkowane w Warszawie.
 
 ## Kluczowe sekcje
-- Sklep (26 modeli): https://frezze.pl/sklep/
-- Zestaw próbek (149 zł, dostawa 0 zł): https://frezze.pl/probki/
-- Poradnik i wiedza techniczna: https://frezze.pl/poradnik/
-- FAQ: https://frezze.pl/faq/
-- Kontakt i showroomy (Warszawa, Milano): https://frezze.pl/kontakt/
+- Sklep (26 modeli): https://przemeknowak781.github.io/Stronapanele/sklep/
+- Zestaw próbek (149 zł, dostawa 0 zł): https://przemeknowak781.github.io/Stronapanele/probki/
+- Poradnik i wiedza techniczna: https://przemeknowak781.github.io/Stronapanele/poradnik/
+- FAQ: https://przemeknowak781.github.io/Stronapanele/faq/
+- Kontakt i showroomy (Warszawa, Milano): https://przemeknowak781.github.io/Stronapanele/kontakt/
 
 ## Kolekcje
-- Stadio (FZ-STA): https://frezze.pl/kolekcje/stadio/ — Sygnaturowy owal
-- Onda (FZ-OND): https://frezze.pl/kolekcje/onda/ — Pion, który oddycha
-- Mare (FZ-MAR): https://frezze.pl/kolekcje/mare/ — Figura · narracja
-- Arcata (FZ-ARC): https://frezze.pl/kolekcje/arcata/ — Bazylika · kolumnada
-- Foglia (FZ-FOG): https://frezze.pl/kolekcje/foglia/ — Organika w linii
-- Concavo (FZ-CON): https://frezze.pl/kolekcje/concavo/ — Wstęga · łuk wklęsły
-- Geometria (FZ-GEO): https://frezze.pl/kolekcje/geometria/ — Czysty rytm
+- Stadio (FZ-STA): https://przemeknowak781.github.io/Stronapanele/kolekcje/stadio/ — Sygnaturowy owal
+- Onda (FZ-OND): https://przemeknowak781.github.io/Stronapanele/kolekcje/onda/ — Pion, który oddycha
+- Mare (FZ-MAR): https://przemeknowak781.github.io/Stronapanele/kolekcje/mare/ — Figura · narracja
+- Arcata (FZ-ARC): https://przemeknowak781.github.io/Stronapanele/kolekcje/arcata/ — Bazylika · kolumnada
+- Foglia (FZ-FOG): https://przemeknowak781.github.io/Stronapanele/kolekcje/foglia/ — Organika w linii
+- Concavo (FZ-CON): https://przemeknowak781.github.io/Stronapanele/kolekcje/concavo/ — Wstęga · łuk wklęsły
+- Geometria (FZ-GEO): https://przemeknowak781.github.io/Stronapanele/kolekcje/geometria/ — Czysty rytm

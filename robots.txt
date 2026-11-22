@@ -1,0 +1,7 @@
+# FREZZE — Google Search Central compliant robots.txt
+User-agent: *
+Allow: /
+Disallow: /Stronapanele/koszyk/
+Disallow: /*?*
+
+Sitemap: https://przemeknowak781.github.io/Stronapanele/sitemap.xml

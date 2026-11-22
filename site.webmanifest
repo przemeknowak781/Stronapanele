@@ -1,0 +1,15 @@
+{
+  "name": "FREZZE — Frezowane panele ścienne z orzecha",
+  "short_name": "FREZZE",
+  "start_url": "/Stronapanele/",
+  "display": "standalone",
+  "background_color": "#f7f2e6",
+  "theme_color": "#160d09",
+  "icons": [
+    {
+      "src": "/Stronapanele/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

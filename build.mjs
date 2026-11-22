@@ -40,12 +40,22 @@ function copyDir(src, dest) {
   }
 }
 
+const BASE = SITE.basePath || '';
+
+function applyBasePath(html) {
+  if (!BASE) return html;
+  return html
+    .replace(/\b(href|src|data-src|data-image)="\/(?!\/)/g, `$1="${BASE}/`)
+    .replace(/"start_url":\s*"\/"/g, `"start_url": "${BASE}/"`);
+}
+
 function writePage(routePath, html) {
+  const finalHtml = applyBasePath(html);
   const filePath = routePath.endsWith('.html')
     ? path.join(DIST, routePath.replace(/^\//, ''))
     : path.join(DIST, routePath.replace(/^\//, ''), 'index.html');
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(filePath, html, 'utf8');
+  fs.writeFileSync(filePath, finalHtml, 'utf8');
 }
 
 function xmlEsc(str = '') {
@@ -96,7 +106,7 @@ for (const article of ARTICLES) {
 const robotsTxt = `# FREZZE — Google Search Central compliant robots.txt
 User-agent: *
 Allow: /
-Disallow: /koszyk/
+Disallow: ${BASE}/koszyk/
 Disallow: /*?*
 
 Sitemap: ${SITE.url}/sitemap.xml
@@ -241,13 +251,14 @@ fs.writeFileSync(path.join(DIST, 'google-merchant-feed.xml'), merchantFeedXml, '
 const manifest = {
   name: 'FREZZE — Frezowane panele ścienne z orzecha',
   short_name: 'FREZZE',
-  start_url: '/',
+  start_url: `${BASE}/`,
   display: 'standalone',
   background_color: '#f7f2e6',
   theme_color: '#160d09',
-  icons: [{ src: '/assets/favicon.svg', sizes: 'any', type: 'image/svg+xml' }]
+  icons: [{ src: `${BASE}/assets/favicon.svg`, sizes: 'any', type: 'image/svg+xml' }]
 };
 fs.writeFileSync(path.join(DIST, 'site.webmanifest'), JSON.stringify(manifest, null, 2), 'utf8');
+fs.writeFileSync(path.join(DIST, '.nojekyll'), '', 'utf8');
 
 const llmsTxt = `# FREZZE — Atelier Frezowanych Paneli Ściennych CNC
 > Wielkoformatowe panele ścienne frezowane z orzecha amerykańskiego Canaletto, dębu wędzonego i jesionu termowanego. Zaprojektowane w Mediolanie, produkowane w Warszawie.
@@ -263,6 +274,9 @@ const llmsTxt = `# FREZZE — Atelier Frezowanych Paneli Ściennych CNC
 ${COLLECTIONS.map((c) => `- ${c.name} (${c.code}): ${SITE.url}/kolekcje/${c.slug}/ — ${c.tagline}`).join('\n')}
 `;
 fs.writeFileSync(path.join(DIST, 'llms.txt'), llmsTxt, 'utf8');
+
+// Copy dist/ to repo root so GitHub Pages "Deploy from branch: main / (root)" works immediately
+copyDir(DIST, ROOT);
 
 const totalPages = coreRoutes.length + COLLECTIONS.length + PRODUCTS.length + ARTICLES.length;
 console.log(`Done! Generated ${totalPages} static HTML pages + Sitemaps + Merchant Feed + robots.txt + llms.txt in dist/`);

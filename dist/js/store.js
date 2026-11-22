@@ -96,7 +96,7 @@
     const pageCart = document.getElementById('fz-cart-page-items');
     if (pageCart) {
       if (!cart.length) {
-        pageCart.innerHTML = '<p>Twój koszyk jest pusty. <a href="/sklep/" style="text-decoration:underline;color:var(--fz-ottone);">Przejdź do sklepu z panelami →</a></p>';
+        pageCart.innerHTML = '<p>Twój koszyk jest pusty. <a href="/Stronapanele/sklep/" style="text-decoration:underline;color:var(--fz-ottone);">Przejdź do sklepu z panelami →</a></p>';
       } else {
         pageCart.innerHTML = cart.map((item) => `
           <div class="fz-cart-item">

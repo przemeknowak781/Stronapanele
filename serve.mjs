@@ -20,7 +20,10 @@ const MIME = {
 };
 
 http.createServer((req, res) => {
-  const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
+  let urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
+  if (urlPath.startsWith('/Stronapanele')) {
+    urlPath = urlPath.slice('/Stronapanele'.length) || '/';
+  }
   let filePath = path.join(DIST, urlPath === '/' ? 'index.html' : urlPath);
 
   if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {

@@ -89,14 +89,16 @@ for (const file of files) {
   }
 
   // 7. Internal link integrity check
+  const base = SITE.basePath || '';
   const hrefs = [...html.matchAll(/href="(\/[^"#?]*)"/gi)].map((m) => m[1]);
-  for (const href of hrefs) {
+  for (const rawHref of hrefs) {
+    const href = base && rawHref.startsWith(base) ? (rawHref.slice(base.length) || '/') : rawHref;
     if (href === '/') continue;
     const targetFile = href.endsWith('/')
       ? path.join(DIST, href.slice(1), 'index.html')
       : path.join(DIST, href.slice(1));
     if (!fs.existsSync(targetFile)) {
-      errors.push(`${rel}: Broken internal link -> ${href}`);
+      errors.push(`${rel}: Broken internal link -> ${rawHref}`);
     }
   }
 }

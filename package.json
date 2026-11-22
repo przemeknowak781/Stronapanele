@@ -1,0 +1,13 @@
+{
+  "name": "frezze-seo-ecommerce",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FREZZE — Sklep internetowy z frezowanymi panelami ściennymi z orzecha amerykańskiego oraz kompletnym ekosystemem SEO zgodnym z Google Search Central.",
+  "scripts": {
+    "build": "node build.mjs",
+    "audit:seo": "node seo-audit.mjs",
+    "dev": "node serve.mjs",
+    "verify": "node build.mjs && node seo-audit.mjs"
+  }
+}

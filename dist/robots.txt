@@ -1,0 +1,7 @@
+# FREZZE — Google Search Central compliant robots.txt
+User-agent: *
+Allow: /
+Disallow: /koszyk/
+Disallow: /*?*
+
+Sitemap: https://frezze.pl/sitemap.xml

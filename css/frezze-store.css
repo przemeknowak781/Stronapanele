@@ -768,7 +768,136 @@ button { cursor: pointer; }
   color: rgba(242, 236, 224, 0.62);
 }
 
+/* ── 3D Architectural Configurator Studio ───────────────────────────── */
+.fz-studio {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 390px;
+  gap: 24px;
+  align-items: start;
+}
+.fz-studio__stage {
+  position: relative;
+  background: #140e0a;
+  border: var(--fz-hairline);
+  aspect-ratio: 16 / 10;
+  min-height: 460px;
+  overflow: hidden;
+  box-shadow: var(--fz-shadow-soft);
+}
+.fz-studio__canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+.fz-studio__canvas:active { cursor: grabbing; }
+.fz-studio__hud-top {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+.fz-studio__badge {
+  pointer-events: auto;
+  background: rgba(22, 13, 9, 0.78);
+  backdrop-filter: blur(8px);
+  color: var(--fz-parchment);
+  padding: 7px 12px;
+  font-family: var(--fz-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid rgba(232, 192, 116, 0.25);
+}
+.fz-studio__cams {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.fz-cam-btn {
+  background: rgba(22, 13, 9, 0.76);
+  backdrop-filter: blur(8px);
+  color: var(--fz-parchment);
+  border: 1px solid rgba(242, 236, 224, 0.28);
+  padding: 7px 12px;
+  font-family: var(--fz-caps);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background 0.2s, border-color 0.2s;
+}
+.fz-cam-btn:hover, .fz-cam-btn.is-active {
+  background: var(--fz-ottone);
+  border-color: var(--fz-ottone);
+  color: #fff;
+}
+.fz-studio__panel {
+  background: #fff;
+  border: var(--fz-hairline);
+  padding: 22px;
+  display: grid;
+  gap: 18px;
+}
+.fz-studio__group {
+  display: grid;
+  gap: 10px;
+  padding-bottom: 16px;
+  border-bottom: var(--fz-hairline);
+}
+.fz-studio__group:last-of-type { border-bottom: none; padding-bottom: 0; }
+.fz-studio__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+}
+.fz-studio__panel input[type="range"] {
+  width: 100%;
+  accent-color: var(--fz-ottone);
+}
+.fz-studio__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.fz-studio__summary {
+  background: var(--fz-calce);
+  border: var(--fz-hairline);
+  padding: 14px 16px;
+  display: grid;
+  gap: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.fz-studio__loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 14, 10, 0.72);
+  color: var(--fz-parchment);
+  font-family: var(--fz-caps);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.fz-studio__loading.is-hidden { opacity: 0; }
+
 /* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 1040px) {
+  .fz-studio { grid-template-columns: 1fr; }
+  .fz-studio__stage { min-height: 360px; }
+}
 @media (max-width: 960px) {
   .fz-pdp { grid-template-columns: 1fr; }
   .fz-footer__grid { grid-template-columns: 1fr 1fr; }

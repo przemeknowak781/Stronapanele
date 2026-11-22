@@ -17,7 +17,8 @@ import {
   renderFaqPage,
   renderContactPage,
   renderCartPage,
-  render404Page
+  render404Page,
+  renderConfiguratorPage
 } from './src/templates/pages.js';
 
 const ROOT = process.cwd();
@@ -76,6 +77,7 @@ const coreRoutes = [
   ['/', renderHomePage()],
   ['/sklep/', renderShopPage()],
   ['/kolekcje/', renderCollectionsHubPage()],
+  ['/konfigurator/', renderConfiguratorPage()],
   ['/probki/', renderSamplesPage()],
   ['/poradnik/', renderArticlesHubPage()],
   ['/atelier/', renderAtelierPage()],
@@ -118,6 +120,7 @@ const pageUrls = [
   '/',
   '/sklep/',
   '/kolekcje/',
+  '/konfigurator/',
   '/poradnik/',
   '/atelier/',
   '/proces/',

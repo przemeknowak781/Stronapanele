@@ -64,9 +64,9 @@ export const SITE = {
   nav: [
     { label: 'Sklep', href: '/sklep/' },
     { label: 'Kolekcje', href: '/kolekcje/' },
+    { label: 'Konfigurator 3D', href: '/konfigurator/' },
     { label: 'Próbki', href: '/probki/' },
     { label: 'Poradnik', href: '/poradnik/' },
-    { label: 'Proces', href: '/proces/' },
     { label: 'Atelier', href: '/atelier/' },
     { label: 'Kontakt', href: '/kontakt/' }
   ]

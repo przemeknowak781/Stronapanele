@@ -94,7 +94,7 @@ export function renderHomePage() {
             </p>
             <div class="fz-hero__actions">
               <a href="/sklep/" class="btn btn--light">Przeglądaj sklep ${ARROW_SVG}</a>
-              <a href="/probki/" class="fz-link-quiet">Zamów zestaw próbek</a>
+              <a href="/konfigurator/" class="fz-link-quiet">Konfigurator 3D</a>
             </div>
           </div>
         </div>
@@ -496,6 +496,7 @@ export function renderProductPage(p) {
             </div>
 
             <div style="display:grid;gap:10px;margin-top:12px;">
+              <a href="/konfigurator/?sku=${esc(p.sku)}" class="btn btn--brass" style="width:100%;">Zobacz ten panel w konfiguratorze 3D</a>
               <a href="/probki/" class="btn btn--outline" style="width:100%;">Zamów zestaw próbek (149 zł)</a>
               <a href="/kontakt/" style="text-align:center;padding:8px;font-size:13.5px;color:var(--fz-ottone);text-decoration:underline;">Potrzebujesz docięcia 1:1 lub plików CAD/BIM? Zapytaj atelier</a>
             </div>
@@ -910,6 +911,141 @@ export function render404Page() {
     description: 'Strona nie została znaleziona w sklepie FREZZE.',
     canonicalPath: '/404.html',
     robots: 'noindex, follow',
+    bodyHtml
+  });
+}
+
+/* ── 9. 3D ARCHITECTURAL CONFIGURATOR & VISUALIZATION STUDIO ────────── */
+export function renderConfiguratorPage() {
+  const breadcrumbs = [
+    { name: 'Strona główna', href: '/' },
+    { name: 'Konfigurator 3D i wizualizacja', href: '/konfigurator/' }
+  ];
+
+  const catalogPayload = PRODUCTS.map((p) => ({
+    sku: p.sku,
+    name: p.name,
+    fullName: p.fullName,
+    collection: p.collection,
+    price: p.price,
+    widthMm: p.widthMm,
+    heightMm: p.heightMm,
+    thicknessMm: p.thicknessMm,
+    image: p.image
+  }));
+
+  const groupedOptions = COLLECTIONS.map((c) => {
+    const items = getProductsByCollection(c.slug);
+    return `<optgroup label="${esc(c.name)} — ${esc(c.tagline)}">
+      ${items.map((p) => `<option value="${esc(p.sku)}">${esc(p.name)} (${esc(p.sku)}) · ${p.widthMm}×${p.heightMm} mm</option>`).join('')}
+    </optgroup>`;
+  }).join('');
+
+  const bodyHtml = `
+    <section class="fz-section fz-section--tight" id="fz-3d-root" data-base-path="${esc(SITE.basePath || '')}">
+      <div class="container">
+        <div class="fz-section-head" style="margin-bottom:24px;">
+          <div>
+            <h1 style="font-size:clamp(30px,4vw,46px);">Konfigurator 3D paneli ściennych</h1>
+            <p>Dobierz wzór CNC, gatunek drewna, wymiary ściany oraz oświetlenie ślizgowe LED, a następnie pobierz realistyczną wizualizację PNG.</p>
+          </div>
+          <button type="button" class="btn btn--brass btn--sm" id="fz-3d-export">Pobierz wizualizację PNG (HD)</button>
+        </div>
+
+        <div class="fz-studio">
+          <div class="fz-studio__stage" id="fz-3d-stage">
+            <canvas class="fz-studio__canvas" id="fz-3d-canvas"></canvas>
+            <div class="fz-studio__hud-top">
+              <span class="fz-studio__badge" id="fz-3d-hud-label">Ładowanie sceny 3D...</span>
+              <span class="fz-studio__badge">Obrót: LPM · Zoom: kółko</span>
+            </div>
+            <div class="fz-studio__cams" role="group" aria-label="Ujęcia kamery">
+              <button type="button" class="fz-cam-btn is-active" data-3d-cam="room">Widok wnętrza</button>
+              <button type="button" class="fz-cam-btn" data-3d-cam="macro">Zbliżenie na frez</button>
+              <button type="button" class="fz-cam-btn" data-3d-cam="raking">Kąt boczny (światło)</button>
+            </div>
+            <div class="fz-studio__loading" id="fz-3d-loading">Generowanie mapy normalnych 3D...</div>
+          </div>
+
+          <aside class="fz-studio__panel" aria-label="Ustawienia konfiguratora 3D">
+            <div class="fz-studio__group">
+              <div class="fz-field">
+                <label for="fz-3d-model">Model panelu CNC (26 wzorów)</label>
+                <select id="fz-3d-model">${groupedOptions}</select>
+              </div>
+              <div>
+                <span class="fz-meta-label" style="display:block;margin-bottom:8px;">Gatunek drewna (olej mat 5°)</span>
+                <div class="fz-studio__chips">
+                  <button type="button" class="fz-pill is-active" data-3d-finish="noce-canaletto">Orzech Canaletto</button>
+                  <button type="button" class="fz-pill" data-3d-finish="rovere-fume">Dąb Wędzony</button>
+                  <button type="button" class="fz-pill" data-3d-finish="frassino-termo">Jesion Termowany</button>
+                  <button type="button" class="fz-pill" data-3d-finish="rovere-nat">Dąb Naturalny</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="fz-studio__group">
+              <span class="fz-meta-label">Aranżacja wnętrza</span>
+              <div class="fz-studio__chips">
+                <button type="button" class="fz-pill is-active" data-3d-room="salon">Salon</button>
+                <button type="button" class="fz-pill" data-3d-room="sypialnia">Sypialnia</button>
+                <button type="button" class="fz-pill" data-3d-room="studio">Studio CNC</button>
+              </div>
+              <div class="fz-studio__row">
+                <label for="fz-3d-w">Szerokość ściany</label>
+                <strong class="fz-data" id="fz-3d-w-val">4.2 m</strong>
+              </div>
+              <input type="range" id="fz-3d-w" min="1.2" max="8.0" step="0.2" value="4.2">
+              <div class="fz-studio__row">
+                <label for="fz-3d-h">Wysokość ściany</label>
+                <strong class="fz-data" id="fz-3d-h-val">2.8 m</strong>
+              </div>
+              <input type="range" id="fz-3d-h" min="1.8" max="4.0" step="0.1" value="2.8">
+              <div class="fz-studio__chips">
+                <button type="button" class="fz-pill is-active" data-3d-orient="vertical">Układ pionowy</button>
+                <button type="button" class="fz-pill" data-3d-orient="horizontal">Układ poziomy</button>
+              </div>
+            </div>
+
+            <div class="fz-studio__group">
+              <span class="fz-meta-label">Światło i głębia reliefu 3D</span>
+              <div class="fz-studio__row">
+                <label for="fz-3d-sun">Pora dnia (światło dzienne → noc)</label>
+              </div>
+              <input type="range" id="fz-3d-sun" min="0" max="1" step="0.02" value="0.55">
+              <div class="fz-studio__row">
+                <label><input type="checkbox" id="fz-3d-led" checked> Listwa LED Wall-Washer</label>
+                <select id="fz-3d-led-temp" aria-label="Barwa LED" style="padding:5px 8px;border:var(--fz-hairline);background:#fff;">
+                  <option value="2700">2700K Ciepły</option>
+                  <option value="3000">3000K Neutralny</option>
+                  <option value="4000">4000K Dzienny</option>
+                </select>
+              </div>
+              <div class="fz-studio__row">
+                <label for="fz-3d-relief">Wyrazistość frezu 3D</label>
+              </div>
+              <input type="range" id="fz-3d-relief" min="0.5" max="3.0" step="0.1" value="1.5">
+            </div>
+
+            <div class="fz-studio__summary" id="fz-3d-summary"></div>
+
+            <button type="button" class="btn btn--primary" id="fz-3d-add-cart" style="width:100%;">Dodaj konfigurację do koszyka</button>
+          </aside>
+        </div>
+      </div>
+
+      <script type="application/json" id="fz-3d-catalog">${JSON.stringify(catalogPayload)}</script>
+      <script type="module" src="/js/configurator3d.js"></script>
+    </section>
+  `;
+
+  return renderLayout({
+    title: 'Konfigurator 3D frezowanych paneli ściennych i wizualizacja wnętrza | FREZZE',
+    description: 'Interaktywny konfigurator 3D paneli ściennych z orzecha amerykańskiego. Zmień wzór CNC, wymiary ściany, oświetlenie LED i pobierz realistyczną wizualizację PNG.',
+    canonicalPath: '/konfigurator/',
+    activeNav: '/konfigurator/',
+    breadcrumbs,
+    schemas: [buildBreadcrumbSchema(breadcrumbs)],
     bodyHtml
   });
 }

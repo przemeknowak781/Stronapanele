@@ -37,13 +37,14 @@ export function renderLayout({
   canonicalPath,
   ogImage = SITE.ogDefaultImage,
   ogType = 'website',
-  robots = 'index, follow, max-image-preview:large, max-snippet:-1',
+  robots = 'noindex, nofollow',
   preloadImage = null,
   activeNav = '',
   breadcrumbs = null,
   schemas = [],
   bodyHtml = ''
 }) {
+  const effectiveRobots = 'noindex, nofollow';
   const canonicalUrl = `${SITE.url}${canonicalPath.startsWith('/') ? canonicalPath : '/' + canonicalPath}`;
   const fullOgImage = ogImage.startsWith('http') ? ogImage : `${SITE.url}${ogImage}`;
 
@@ -59,7 +60,8 @@ export function renderLayout({
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(description)}">
-  <meta name="robots" content="${esc(robots)}">
+  <meta name="robots" content="${esc(effectiveRobots)}">
+  <meta name="googlebot" content="${esc(effectiveRobots)}">
   <link rel="canonical" href="${esc(canonicalUrl)}">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="manifest" href="/site.webmanifest">
@@ -93,6 +95,10 @@ export function renderLayout({
 </head>
 <body>
   <a href="#main-content" class="skip-link">Przejdź do głównej treści</a>
+
+  <div class="fz-demo-bar" role="status">
+    <span><strong>DEMO STORE</strong> — wersja demonstracyjna sklepu internetowego FREZZE. Zamówienia, ceny i formularze mają charakter poglądowy.</span>
+  </div>
 
   <header class="fz-header">
     <div class="fz-header__inner">

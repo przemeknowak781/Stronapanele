@@ -124,6 +124,23 @@ button { cursor: pointer; }
 }
 .fz-num { font-variant-numeric: tabular-nums; }
 
+/* ── Demo Store Banner ──────────────────────────────────────────────── */
+.fz-demo-bar {
+  background: var(--fz-noce-deep);
+  color: var(--fz-calce);
+  border-bottom: 1px solid rgba(232, 192, 116, 0.35);
+  padding: 9px var(--fz-gutter);
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.fz-demo-bar strong {
+  color: var(--fz-ottone-bright);
+  font-family: var(--fz-caps);
+  letter-spacing: 0.14em;
+  margin-right: 6px;
+}
+
 /* ── Header / Navigation ────────────────────────────────────────────── */
 .fz-header {
   position: sticky;

@@ -103,18 +103,20 @@ for (const file of files) {
   }
 }
 
-// 8. Sitemap vs Canonical consistency
+// 8. Sitemap vs Canonical consistency (skipped when global demo noindex mode is active)
 const sitemapFiles = ['sitemap-pages.xml', 'sitemap-products.xml', 'sitemap-articles.xml'];
 const sitemapUrls = new Set();
 for (const sf of sitemapFiles) {
   const xml = fs.readFileSync(path.join(DIST, sf), 'utf8');
   for (const m of xml.matchAll(/<loc>(.*?)<\/loc>/g)) sitemapUrls.add(m[1]);
 }
-for (const u of sitemapUrls) {
-  if (!canonicalSet.has(u)) errors.push(`Sitemap URL not found among indexable canonicals: ${u}`);
-}
-for (const c of canonicalSet) {
-  if (!sitemapUrls.has(c)) errors.push(`Indexable canonical missing from sitemaps: ${c}`);
+if (canonicalSet.size > 0) {
+  for (const u of sitemapUrls) {
+    if (!canonicalSet.has(u)) errors.push(`Sitemap URL not found among indexable canonicals: ${u}`);
+  }
+  for (const c of canonicalSet) {
+    if (!sitemapUrls.has(c)) errors.push(`Indexable canonical missing from sitemaps: ${c}`);
+  }
 }
 
 const report = {
